@@ -156,6 +156,34 @@ In addition, additional classes have been created to facilitate interfacing:
 * **main**: Main code to start the algorithm
 * **C_Interface**: Provides a C interface for the method
 
+## C++ planner API
+
+The reusable planner core lives in:
+- `Program/Planner.h`
+- `Program/Planner.cpp`
+
+This API separates solving from CLI parsing and file output.
+
+Minimal usage:
+
+```cpp
+#include "Planner.h"
+
+AlgorithmParameters ap = default_algorithm_parameters();
+ap.seed = 1;
+
+PlannerRequest req = Planner::buildRequestFromCVRPLIB("../Instances/CVRP/X-n101-k25.vrp", true, INT_MAX, true, ap);
+PlannerResult res = Planner::solve(req);
+
+if (res.hasSolution)
+{
+	Planner::writeCVRPLibSolution(res, "mySolution.sol");
+	Planner::writeSearchProgress(res, "mySolution.sol.PG.csv", "../Instances/CVRP/X-n101-k25.vrp");
+}
+```
+
+The CLI executable (`Program/main.cpp`) now uses this API internally.
+
 ## Compiling the shared library
 
 You can also build a shared library to call the HGS-CVRP algorithm from your code.

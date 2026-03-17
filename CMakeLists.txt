@@ -12,6 +12,7 @@ set(
         Program/Split.cpp
         Program/InstanceCVRPLIB.cpp
         Program/AlgorithmParameters.cpp
+        Program/Planner.cpp
         Program/C_Interface.cpp)
 
 if (MSVC)

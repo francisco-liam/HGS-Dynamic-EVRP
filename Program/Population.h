@@ -77,6 +77,9 @@ class Population
    // Accesses the best found solution at all time
    const Individual * getBestFound();
 
+   // Accesses the history of solution improvements
+   const std::vector<std::pair<clock_t, double>>& getSearchProgress() const;
+
    // Prints population state
    void printState(int nbIter, int nbIterNoImprovement);
 

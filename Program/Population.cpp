@@ -207,6 +207,11 @@ const Individual * Population::getBestFound()
 	else return NULL;
 }
 
+const std::vector<std::pair<clock_t, double>>& Population::getSearchProgress() const
+{
+	return searchProgress;
+}
+
 void Population::printState(int nbIter, int nbIterNoImprovement)
 {
 	if (params.verbose)
