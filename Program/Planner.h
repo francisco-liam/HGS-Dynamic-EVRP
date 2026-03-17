@@ -6,6 +6,7 @@
 #include <utility>
 #include <climits>
 #include "AlgorithmParameters.h"
+#include "PlanningSnapshot.h"
 
 struct PlannerInstanceData
 {
@@ -25,6 +26,7 @@ struct PlannerRequest
 	int nbVeh = INT_MAX;
 	bool verbose = true;
 	AlgorithmParameters ap = default_algorithm_parameters();
+	std::vector<int> originalNodeIds; // Optional mapping from internal node ids to external ids
 };
 
 struct PlannerProgressEntry
@@ -46,7 +48,9 @@ class Planner
 {
 public:
 	static PlannerRequest buildRequestFromCVRPLIB(const std::string& instancePath, bool isRoundingInteger, int nbVeh, bool verbose, const AlgorithmParameters& ap);
+	static PlannerRequest buildRequestFromSnapshot(const PlanningSnapshot& snapshot, bool verbose, const AlgorithmParameters& ap);
 	static PlannerResult solve(const PlannerRequest& request);
+	static PlanResult solveSnapshot(const PlanningSnapshot& snapshot, bool verbose, const AlgorithmParameters& ap);
 
 	static void writeCVRPLibSolution(const PlannerResult& result, const std::string& fileName);
 	static void writeSearchProgress(const PlannerResult& result, const std::string& fileName, const std::string& instanceName);

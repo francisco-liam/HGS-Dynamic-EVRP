@@ -1,0 +1,66 @@
+{
+  "snapshot_id": "snapshot_001",
+  "timestamp": 120.0,
+
+  "problem": {
+    "depot": {
+      "id": 0,
+      "x": 50.0,
+      "y": 50.0
+    },
+
+    "vehicles": {
+      "count": 3,
+      "energy_capacity": 100.0
+    }
+  },
+
+  "vehicles": [
+    {
+      "vehicle_id": 0,
+      "position": { "x": 50.0, "y": 50.0 },
+      "energy_remaining": 100.0,
+
+      "locked_prefix": [0, 3],
+      "current_target": 3
+    },
+    {
+      "vehicle_id": 1,
+      "position": { "x": 20.0, "y": 80.0 },
+      "energy_remaining": 65.0,
+
+      "locked_prefix": [0, 5, 7],
+      "current_target": 7
+    },
+    {
+      "vehicle_id": 2,
+      "position": { "x": 75.0, "y": 30.0 },
+      "energy_remaining": 40.0,
+
+      "locked_prefix": [0],
+      "current_target": null
+    }
+  ],
+
+  "customers": [
+    { "id": 1, "x": 10.0, "y": 15.0, "demand": 1, "service_time": 0 },
+    { "id": 2, "x": 80.0, "y": 10.0, "demand": 1, "service_time": 0 },
+    { "id": 3, "x": 60.0, "y": 70.0, "demand": 1, "service_time": 0 },
+    { "id": 4, "x": 30.0, "y": 25.0, "demand": 1, "service_time": 0 },
+    { "id": 5, "x": 15.0, "y": 60.0, "demand": 1, "service_time": 0 },
+    { "id": 6, "x": 90.0, "y": 55.0, "demand": 1, "service_time": 0 },
+    { "id": 7, "x": 25.0, "y": 85.0, "demand": 1, "service_time": 0 },
+    { "id": 8, "x": 65.0, "y": 20.0, "demand": 1, "service_time": 0 }
+  ],
+
+  "active_customers": [1, 2, 4, 6, 8],
+
+  "required_edges": [
+    { "from": 4, "to": 6 }
+  ],
+
+  "cost_model": {
+    "metric": "euclidean",
+    "energy_per_distance": 1.0
+  }
+}

@@ -13,6 +13,7 @@ set(
         Program/InstanceCVRPLIB.cpp
         Program/AlgorithmParameters.cpp
         Program/Planner.cpp
+        Program/SnapshotAdapter.cpp
         Program/C_Interface.cpp)
 
 if (MSVC)
@@ -80,6 +81,11 @@ if(CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
     add_subdirectory(Test/Test-c/)
     add_test(NAME       lib_test_c
              COMMAND    lib_test_c)
+
+        # Test Snapshot API
+        add_subdirectory(Test/Test-snapshot/)
+        add_test(NAME       snapshot_test
+                         COMMAND    snapshot_test)
 
     # Install
     install(TARGETS lib

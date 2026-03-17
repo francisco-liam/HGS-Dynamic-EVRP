@@ -1,5 +1,6 @@
 #include "Planner.h"
 #include "InstanceCVRPLIB.h"
+#include "SnapshotAdapter.h"
 #include "Params.h"
 #include "Genetic.h"
 #include <fstream>
@@ -24,6 +25,11 @@ PlannerRequest Planner::buildRequestFromCVRPLIB(const std::string& instancePath,
 	request.ap = ap;
 
 	return request;
+}
+
+PlannerRequest Planner::buildRequestFromSnapshot(const PlanningSnapshot& snapshot, bool verbose, const AlgorithmParameters& ap)
+{
+	return SnapshotAdapter::toPlannerRequest(snapshot, ap, verbose);
 }
 
 PlannerResult Planner::solve(const PlannerRequest& request)
@@ -52,6 +58,17 @@ PlannerResult Planner::solve(const PlannerRequest& request)
 		result.hasSolution = true;
 		result.bestCost = best->eval.penalizedCost;
 		result.routes = best->chromR;
+		if (!request.originalNodeIds.empty())
+		{
+			for (std::vector<int>& route : result.routes)
+			{
+				for (int& customerId : route)
+				{
+					if (customerId >= 0 && customerId < (int)request.originalNodeIds.size())
+						customerId = request.originalNodeIds[customerId];
+				}
+			}
+		}
 	}
 
 	for (const std::pair<clock_t, double>& state : solver.population.getSearchProgress())
@@ -63,6 +80,13 @@ PlannerResult Planner::solve(const PlannerRequest& request)
 	}
 
 	return result;
+}
+
+PlanResult Planner::solveSnapshot(const PlanningSnapshot& snapshot, bool verbose, const AlgorithmParameters& ap)
+{
+	PlannerRequest request = buildRequestFromSnapshot(snapshot, verbose, ap);
+	PlannerResult plannerResult = solve(request);
+	return SnapshotAdapter::toPlanResult(snapshot, plannerResult);
 }
 
 void Planner::writeCVRPLibSolution(const PlannerResult& result, const std::string& fileName)

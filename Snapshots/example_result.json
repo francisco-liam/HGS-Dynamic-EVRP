@@ -1,0 +1,8 @@
+{
+  "routes": [
+    { "vehicle_id": 0, "route": [3, 4, 6, 1] },
+    { "vehicle_id": 1, "route": [7, 2] },
+    { "vehicle_id": 2, "route": [8] }
+  ],
+  "objective_cost": 143.5
+}

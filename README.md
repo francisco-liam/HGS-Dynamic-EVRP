@@ -184,6 +184,29 @@ if (res.hasSolution)
 
 The CLI executable (`Program/main.cpp`) now uses this API internally.
 
+### Snapshot input API
+
+Stage 3 adds immutable snapshot-oriented types in `Program/PlanningSnapshot.h` and a snapshot solver entrypoint in `Program/Planner.h`.
+
+Minimal usage:
+
+```cpp
+#include "Planner.h"
+
+PlanningSnapshot snapshot;
+snapshot.snapshotId = "snapshot_001";
+snapshot.depot.id = 0;
+snapshot.depot.position = {50.0, 50.0};
+snapshot.vehicles.count = 3;
+snapshot.vehicles.energyCapacity = 100.0;
+// ... fill vehicleStates, customers, activeCustomers ...
+
+AlgorithmParameters ap = default_algorithm_parameters();
+PlanResult plan = Planner::solveSnapshot(snapshot, true, ap);
+```
+
+At this stage, fields such as locked prefixes and required edges are validated and carried by the snapshot model, but not yet enforced as solving constraints.
+
 ## Compiling the shared library
 
 You can also build a shared library to call the HGS-CVRP algorithm from your code.
