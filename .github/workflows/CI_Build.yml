@@ -32,6 +32,11 @@ jobs:
       run: |
         cd build
         ctest -R bin --verbose
+    - name: test baseline on ${{ matrix.os }}
+      if: matrix.os == 'ubuntu-latest'
+      run: |
+        cd build
+        ctest -R baseline --verbose
     - name: make lib on ${{ matrix.os }}
       run: |
         cd build

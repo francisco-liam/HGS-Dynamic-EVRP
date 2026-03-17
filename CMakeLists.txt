@@ -69,6 +69,12 @@ if(CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
                                         -DROUND=0
                                         -P ${PROJECT_SOURCE_DIR}/Test/TestExecutable.cmake)
 
+        # Baseline regression harness
+        add_test(NAME    baseline_compare
+                         COMMAND ${CMAKE_COMMAND}   -DROOT=${PROJECT_SOURCE_DIR}
+                                                                                -DBINARY_DIR=${CMAKE_BINARY_DIR}
+                                                                                -P ${PROJECT_SOURCE_DIR}/Test/BaselineCompare.cmake)
+
     # Test Library
     add_subdirectory(Test/Test-c/)
     add_test(NAME       lib_test_c

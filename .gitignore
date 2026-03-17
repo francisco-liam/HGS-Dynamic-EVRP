@@ -52,3 +52,6 @@ cmake-build-*
 *.out
 *.app
 
+#copilot
+context.md
+

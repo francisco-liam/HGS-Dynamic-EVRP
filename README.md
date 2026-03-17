@@ -60,6 +60,34 @@ Test with:
 ctest -R bin --verbose
 ```
 
+## Baseline capture and comparison
+
+To keep a stable regression baseline while refactoring, this repository includes a tiny baseline harness over fixed instances.
+
+### Capture baseline outputs
+
+Run from the `build` directory after building `bin`:
+
+```console
+cmake -DROOT=.. -DBINARY_DIR=. -P ../Test/BaselineCapture.cmake
+```
+
+This writes baseline artifacts to `baseline/vidal/`:
+- `manifest.csv`: instance, rounding mode, seed, objective value
+- `metadata.txt`: capture timestamp and commit hash
+- `*.sol` files for each baseline instance
+
+### Compare current solver against baseline
+
+Run after building `bin`:
+
+```console
+ctest -R baseline --verbose
+```
+
+The `baseline_compare` test reruns the same cases and checks objective equality with `baseline/vidal/manifest.csv`.
+It also performs a full `.sol` file diff as a diagnostic warning.
+
 ## Running the algorithm
 
 After building the executable, try an example: 
